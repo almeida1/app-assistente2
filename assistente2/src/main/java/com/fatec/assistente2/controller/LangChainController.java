@@ -19,15 +19,18 @@ public class LangChainController {
     @Autowired
     Assistant assistant;
     //nao considera o contexto das mensagens
+    //interage diretamente com um chatLanguageModel (que representa o LLM subjacente) 
+    //para gerar uma resposta.
     @PostMapping("/chat-bot")
     public String chatBot(@RequestBody String message) {
+    	System.out.println("Modelo selecionado - " + chatLanguageModel.toString());
         return chatLanguageModel.generate(message);
     }
     //no assistant é possivel guardar informacoes anteriores
     @PostMapping("/assistant")
     public String assistant(@RequestBody String message) {
     	System.out.println(">>>>>>  assistente");
-        return assistant.chat(message);
+        return assistant.chat(message, 1L);
     }
 
 }
